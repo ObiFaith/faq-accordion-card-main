@@ -49,38 +49,40 @@ const Accorion = (question, answer) =>
       </p>
    </div>`;
 
-document.addEventListener('DOMContentLoaded', () => {
-	// add accordions to the DOM
-	accordions.innerHTML = faqs
-		.map(faq => Accorion(faq.question, faq.answer))
-		.join('');
+// add accordions to the DOM
+accordions.innerHTML = faqs
+	.map(faq => Accorion(faq.question, faq.answer))
+	.join('');
 
-	const questions = Array.from(accordions.querySelectorAll('.question'));
-	questions.map(question => {
-		question.addEventListener('click', () => {
-			const questionAnswer = question.nextElementSibling;
+const questions = Array.from(accordions.querySelectorAll('.question'));
+questions.map(question => {
+	question.addEventListener('click', () => {
+		const questionAnswer = question.nextElementSibling;
 
-			accordions.querySelectorAll('.answer').forEach(answer => {
-				if (questionAnswer !== answer) {
-					answer.classList.add('hidden');
-					answer.previousElementSibling.firstElementChild.classList.add(
-						'hover:text-soft-red'
-					);
-					answer.previousElementSibling.classList.remove('font-bold');
-				}
-			});
-
-			// Toggle the clicked question's answer and adjust its classes
-			questionAnswer.classList.toggle('hidden');
-			if (questionAnswer.classList.contains('hidden')) {
-				question.firstElementChild.classList.add('hover:text-soft-red');
-				question.classList.remove('font-bold');
-			} else {
-				question.firstElementChild.classList.remove(
+		accordions.querySelectorAll('.answer').forEach(answer => {
+			if (questionAnswer !== answer) {
+				answer.classList.add('hidden');
+				answer.previousElementSibling.firstElementChild.classList.add(
 					'hover:text-soft-red'
 				);
-				question.classList.add('font-bold');
+				answer.previousElementSibling.classList.remove('font-bold');
 			}
 		});
+
+		// Toggle the clicked question's answer and adjust its classes
+		questionAnswer.classList.toggle('hidden');
+		if (questionAnswer.classList.contains('hidden')) {
+			question.firstElementChild.classList.add('hover:text-soft-red');
+			question.classList.remove('font-bold');
+		} else {
+			question.firstElementChild.classList.remove('hover:text-soft-red');
+			question.classList.add('font-bold');
+		}
 	});
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+	questions[1].nextElementSibling.classList.remove('hidden');
+	questions[1].firstElementChild.classList.remove('hover:text-soft-red');
+	questions[1].classList.add('font-bold');
+})
